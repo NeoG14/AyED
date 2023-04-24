@@ -2,6 +2,7 @@ package tp04.ejercicio1;
 
 import tp02.ejercicio2.ListaEnlazadaGenerica;
 import tp02.ejercicio2.ListaGenerica;
+import tp02.ejercicio3.ColaGenerica;
 
 public class ArbolGeneral<T> {
 
@@ -74,18 +75,60 @@ public class ArbolGeneral<T> {
 	}
 	
 	public Integer altura() {
-		// Falta implementar..
-		return 0;
+		int altura=-1;
+		if (this.esHoja())
+			return 0;
+		if (this.tieneHijos()) {
+			ListaGenerica<ArbolGeneral<T>> lhijos = this.getHijos();
+			lhijos.comenzar();
+			while (!lhijos.fin())
+				altura = Math.max(altura,lhijos.proximo().altura());
+		}
+		return altura + 1;
 	}
 
 	public Integer nivel(T dato) {
-		// falta implementar
-		return -1;
+		int n=-1;
+		if(this.getDato() == dato) 
+			return n+1;
+		else
+			if(this.tieneHijos()) {
+				ListaGenerica<ArbolGeneral<T>> lHijos = this.getHijos();
+				lHijos.comenzar();
+				while(!lHijos.fin())
+					n = lHijos.proximo().nivel(dato);
+			}
+		if(n != -1)
+			return n+1;
+		return n;
 	}
 
 	public Integer ancho() {
-		// Falta implementar..
-		return 0;
+		int max = -1; int tam_act = 0;
+		ColaGenerica<ArbolGeneral<T>> cola = new ColaGenerica<ArbolGeneral<T>>();
+		ArbolGeneral<T> arbol_aux;
+		cola.encolar(this);
+		cola.encolar(null);
+		while(!cola.esVacia()) {
+			arbol_aux = cola.desencolar();
+			if(arbol_aux != null) {
+				tam_act++;
+				if(arbol_aux.tieneHijos()) {
+					ListaGenerica<ArbolGeneral<T>> hijos = arbol_aux.getHijos();
+					hijos.comenzar();
+					while (!hijos.fin()) 
+						cola.encolar(hijos.proximo());
+				}
+			}else {
+				if(!cola.esVacia()) 
+					cola.encolar(null);
+				if(tam_act>max)
+					max=tam_act;
+				tam_act = 0;
+			}			
+		}
+		return max;
 	}
+	
 
 }

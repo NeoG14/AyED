@@ -141,24 +141,30 @@ public class RecorridosAG {
 	
 	public static void main(String[] args) {
 		
+		ArbolGeneral<Integer> a1 = new ArbolGeneral<Integer>(1);
+		ArbolGeneral<Integer> a2 = new ArbolGeneral<Integer>(2);
+		ArbolGeneral<Integer> a3 = new ArbolGeneral<Integer>(3);
+		ArbolGeneral<Integer> a4 = new ArbolGeneral<Integer>(4);
 		ArbolGeneral<Integer> a5 = new ArbolGeneral<Integer>(5);
-		ArbolGeneral<Integer> a11 = new ArbolGeneral<Integer>(11);
-		ArbolGeneral<Integer> a13 = new ArbolGeneral<Integer>(13);
+		ArbolGeneral<Integer> a6 = new ArbolGeneral<Integer>(6);
 		ArbolGeneral<Integer> a7 = new ArbolGeneral<Integer>(7);
-		ArbolGeneral<Integer> a17 = new ArbolGeneral<Integer>(17);
+		ArbolGeneral<Integer> a8 = new ArbolGeneral<Integer>(8);
 		ArbolGeneral<Integer> a9 = new ArbolGeneral<Integer>(9);
+		ArbolGeneral<Integer> a10 = new ArbolGeneral<Integer>(10);
 		
-		a5.agregarHijo(a11);
-		a5.agregarHijo(a13);
-		a5.agregarHijo(a7);
-		a11.agregarHijo(a9);
-		a11.agregarHijo(a17);
+		a1.agregarHijo(a2);
+		a1.agregarHijo(a3);
+		a1.agregarHijo(a4);
+		a1.agregarHijo(a5);
 		
-		ListaGenerica<Integer> l = numerosImparesMayoresQuePorNiveles(a5,3);
-		l.comenzar();
-		while(!l.fin()) {
-			System.out.println(l.proximo());
-		}
+		a2.agregarHijo(a6);
+		a3.agregarHijo(a7);
+		a4.agregarHijo(a8);
+		a4.agregarHijo(a9);
+		a4.agregarHijo(a10);
+
+		
+		System.out.println(a1.ancho());
 
 		
 	}
