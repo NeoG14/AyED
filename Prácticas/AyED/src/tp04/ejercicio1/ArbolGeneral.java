@@ -85,6 +85,39 @@ public class ArbolGeneral<T> {
 		 }
 	}
 	
+	public ListaGenerica<T> postOrden(ArbolGeneral<T> a) {
+		ListaGenerica<T> lista = new ListaEnlazadaGenerica<T>();
+		postOrden(a,lista);
+		return lista;
+	}
+	
+	private void postOrden(ArbolGeneral<T> a,ListaGenerica<T> l) {
+		 ListaGenerica<ArbolGeneral<T>> lHijos = a.getHijos();
+		 lHijos.comenzar();
+		 while (!lHijos.fin()) {
+			 postOrden(lHijos.proximo(),l);
+		 }
+		 l.agregarFinal(a.getDato());
+	}
+	
+	public ListaGenerica<T> InOrden(ArbolGeneral<T> a) {
+		ListaGenerica<T> lista = new ListaEnlazadaGenerica<T>();
+		InOrden(a,lista);
+		return lista;
+	}
+	
+	private void InOrden(ArbolGeneral<T> a,ListaGenerica<T> l) {
+		 ListaGenerica<ArbolGeneral<T>> lHijos = a.getHijos();
+		 lHijos.comenzar();
+		 if(!lHijos.fin()) {
+			 InOrden(lHijos.proximo(),l);
+		 }
+		 l.agregarFinal(a.getDato());
+		 while (!lHijos.fin()) {
+			 InOrden(lHijos.proximo(),l);
+		 }
+	}
+	
 	public Integer altura() {
 		int altura=-1;
 		if (this.esHoja())
