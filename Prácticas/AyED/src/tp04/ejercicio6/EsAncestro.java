@@ -7,22 +7,51 @@ import tp04.ejercicio1.ArbolGeneral;
 
 public class EsAncestro {
 	
-	public static Boolean esAncestro(Integer a, Integer b,ArbolGeneral<Integer> ab) {
-		boolean encontre = false;
+	public static Boolean esAncestro(Integer a,Integer b,ArbolGeneral<Integer> ab) {
 		ArbolGeneral<Integer> arbola = new ArbolGeneral<Integer>(null);
 		ArbolGeneral<Integer> arbolb = new ArbolGeneral<Integer>(null);
 		arbola = devolverSubArbol(a,ab);
 		if(!arbola.esVacio())
 			arbolb = devolverSubArbol(b,arbola);
-		if(!arbolb.esVacio())
-			encontre = true;
-		return encontre;
+		return (!arbolb.esVacio());
 	}
 	
 	private static ArbolGeneral<Integer> devolverSubArbol(Integer dato,ArbolGeneral<Integer> ab) {
+		if(ab.getDato() == dato) {
+			ab = devolverArbol2(ab);
+		}else
+			if(ab.tieneHijos() & ab.esVacio()) {
+				ListaGenerica<ArbolGeneral<Integer>> lHijos = ab.getHijos();
+				lHijos.comenzar();
+				while(!lHijos.fin() & ab.esVacio()) {
+					ab = devolverSubArbol(dato,lHijos.proximo());
+				}	
+			}
+		return ab;
+	}
+	
+	private static ArbolGeneral<Integer> devolverArbol2(ArbolGeneral<Integer> ab) {
+		ArbolGeneral<Integer> arbol = new ArbolGeneral<Integer>(null);
+		if(ab.esHoja()) {
+			arbol.setDato(ab.getDato());
+			return arbol;
+		}
+		if(ab.tieneHijos()) {
+			ListaGenerica<ArbolGeneral<Integer>> lHijos = ab.getHijos();
+			lHijos.comenzar();
+			while(!lHijos.fin()) {
+				ArbolGeneral<Integer> arbol_aux = lHijos.proximo();
+				arbol.agregarHijo(devolverArbol2(arbol_aux));
+			}
+		}
+		arbol.setDato(ab.getDato());
+		return arbol;	
+	}
+	/*
+	private static ArbolGeneral<Integer> devolverSubArbol(Integer dato,ArbolGeneral<Integer> ab) {
 		ArbolGeneral<Integer> aux = new ArbolGeneral<Integer>(null);
 		if(ab.getDato() == dato) {
-			devolverArbol(ab,aux);
+			aux = devolverArbol2(ab);
 		}else
 			if(ab.tieneHijos() & aux.esVacio()) {
 				ListaGenerica<ArbolGeneral<Integer>> lHijos = ab.getHijos();
@@ -33,8 +62,9 @@ public class EsAncestro {
 			}
 		return aux;
 	}
-	
-	private static void devolverArbol(ArbolGeneral<Integer> ab,ArbolGeneral<Integer> aux) {
+	*/
+	/*
+	public static void devolverArbol(ArbolGeneral<Integer> ab,ArbolGeneral<Integer> aux) {
 		if(aux.esVacio())
 			aux.setDato(ab.getDato());
 		else {
@@ -50,6 +80,8 @@ public class EsAncestro {
 			}
 		}
 	}
+	*/
+	
 	
 	public static void ImprimirPorNiveles(ArbolGeneral<Integer> a) {
 		ListaGenerica<Integer> result = new ListaEnlazadaGenerica<Integer>();
@@ -94,12 +126,13 @@ public class EsAncestro {
 		n12.agregarHijo(n13);
 		
 		n15.agregarHijo(n40);
-		//ImprimirPorNiveles(n30);
-		
+		//ImprimirPorNiveles(n25);
+		//System.out.println();
 		//ArbolGeneral<Integer> arbol = devolverSubArbol(25,n25);
+		//ImprimirPorNiveles(arbol);
 		//ArbolGeneral<Integer> arbol2 = devolverSubArbol(11,arbol);
 		
-		System.out.println(n25.esAncestro(12, 13));
+		System.out.println(n25.esAncestro(25, 1));
 		//ImprimirPorNiveles(arbol2);
 		
 		/*
