@@ -174,84 +174,31 @@ public class ArbolGeneral<T> {
 		return max;
 	}
 	
-	public Boolean esAncestro(T a, T b) {
-		boolean encontre = false;
-		ArbolGeneral<T> arbola = new ArbolGeneral<T>(null);
-		ArbolGeneral<T> arbolb = new ArbolGeneral<T>(null);
-		arbola = devolverSubArbol(a,this);
-		if(!arbola.esVacio())
-			arbolb = devolverSubArbol(b,arbola);
-		if(!arbolb.esVacio())
-			encontre = true;
-		return encontre;
+	
+	public Boolean esAncestro(T a,T b) {
+		//ArbolGeneral<T> arbolA = new ArbolGeneral<T>(null);
+		//ArbolGeneral<T> arbolB = new ArbolGeneral<T>(null);
+		//arbolA = devolverSubArbol(a,this);
+		//if(!arbolA.esVacio())
+			//arbolB = devolverSubArbol(b,arbolA);
+		//return (!arbolB.esVacio());
+		return (!devolverSubArbol(b,devolverSubArbol(a,this)).esVacio());
 	}
 	
 	private ArbolGeneral<T> devolverSubArbol(T dato,ArbolGeneral<T> ab) {
-		ArbolGeneral<T> aux = new ArbolGeneral<T>(null);
-		if(ab.getDato() == dato) {
-			devolverArbol(ab,aux);
+		ArbolGeneral<T> arbol = new ArbolGeneral<T>(null);
+		if(ab.getDato().equals(dato)) {
+			return ab;
 		}else
-			if(ab.tieneHijos() & aux.esVacio()) {
+			if(ab.tieneHijos()) {
 				ListaGenerica<ArbolGeneral<T>> lHijos = ab.getHijos();
 				lHijos.comenzar();
-				while(!lHijos.fin() & aux.esVacio()) {
-					aux = devolverSubArbol(dato,lHijos.proximo());
+				while(!lHijos.fin() && arbol.esVacio()) {
+					arbol = devolverSubArbol(dato,lHijos.proximo());
 				}	
 			}
-		return aux;
+		return arbol;
 	}
-	
-	private void devolverArbol(ArbolGeneral<T> ab,ArbolGeneral<T> aux) {
-		if(aux.esVacio())
-			aux.setDato(ab.getDato());
-		else {
-			ArbolGeneral<T> nodo = new ArbolGeneral<T>(ab.getDato());
-			aux.agregarHijo(nodo);
-		}
-		if(ab.tieneHijos()) {
-			ListaGenerica<ArbolGeneral<T>> lHijos = ab.getHijos();
-			lHijos.comenzar();
-			while(!lHijos.fin()) {
-				ArbolGeneral<T> arbol_aux = lHijos.proximo();
-				devolverArbol(arbol_aux,aux);
-			}
-		}
-	}
-	
-	/*
-	public Boolean esAncestro (T a,T b) {
-		ListaGenerica<T> lista = new ListaEnlazadaGenerica<T>();
-		ListaGenerica<T> camino = new ListaEnlazadaGenerica<T>();
-		lista.agregarInicio(this.getDato());
-		esAncestro (a,b,lista,camino);
-		if ((camino.incluye(a)) && (camino.incluye(b))){
-			return true;
-		}
-		return false;	
-	}
-	
-	private void clonar(ListaGenerica<T> lista,ListaGenerica<T> camino) {
-		lista.comenzar();
-		while (!lista.fin()) {
-			camino.agregarFinal(lista.proximo());
-		}
-	}
-	
-	private void esAncestro(T a, T b,ListaGenerica<T> lista,ListaGenerica<T> camino) {
-		if (this.getDato() == b) 
-			clonar(lista,camino);
-		if (camino.esVacia()){
-			ListaGenerica<ArbolGeneral<T>> lhijos = this.getHijos();
-			lhijos.comenzar();
-			while ((!lhijos.fin()) && (camino.esVacia())){
-					ArbolGeneral<T> aux = lhijos.proximo();
-					lista.agregarFinal(aux.getDato());
-					aux.esAncestro(a,b,lista,camino);
-					lista.eliminarEn(lista.tamanio());
-				}
-			}
-		}
-	*/
 
 
 }
